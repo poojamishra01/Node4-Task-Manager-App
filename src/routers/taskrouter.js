@@ -35,7 +35,6 @@ if(req.query.sortBy)
     //console.log(parts)
     sort[parts[0]]= parts[1]==='desc' ? -1 : 1
     
-
 }
     try{
         await req.user.populate({

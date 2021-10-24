@@ -18,18 +18,13 @@ const app=express()
 const Task=require('./models/task')
 const User=require('./models/user')
 
-// const main=async()=>{
-//     const user=await User.findById('617265c1b384c40cc01599ac')
-//     await user.populate('tasks').execPopulate()
-//     console.log(user.tasks)
-// }
-// main()
+
 
 app.use(express.json())//for post http request method we need it
 app.use(userRouter)
 app.use(taskRouter)
 
-const port=process.env.PORT ||3000
+const port=process.env.PORT
 
 app.listen(port, ()=> {
     console.log('Server is up on '+port)

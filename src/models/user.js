@@ -48,6 +48,10 @@ const userSchema=new mongoose.Schema({
         }
 
     },
+    avatar:{
+        type:Buffer
+    }
+    ,
     tokens:[{
         token:{
             type:String,
@@ -83,7 +87,7 @@ userSchema.statics.findByCredentials=async(email,password)=>{
 //#methods# methods are accessible on instance of Model
 userSchema.methods.generateAuthToken=async function(){
     const user=this
-    const token =jwt.sign({_id:user.id.toString()},'thisismynewproject')
+    const token =jwt.sign({_id:user.id.toString()},process.env.JWT_SECRET)
     user.tokens=user.tokens.concat({token})
     await user.save()
     return token
@@ -94,6 +98,7 @@ userSchema.methods.toJSON=function(){
     const userObject=user.toObject()
     delete userObject.password
     delete userObject.tokens
+    delete userObject.avatar
     return userObject
 }
 //middleware definition for hashing plain textpassword before saving 
